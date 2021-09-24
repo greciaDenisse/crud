@@ -10,10 +10,15 @@ const [modalEditar,setModalEditar]=useState(false);
 const [modalEliminar,setModalEliminar]=useState(false);
 const [modalInsertar,setModalInsertar]=useState(false);
 
-const imagenes = () => {
-  const input = document.getElementById('foto');
-  if(input.files && input.files[0])
-    console.log(input.files[0].name);
+
+const handleChangeImg=()=>{
+  let name="fotografia";
+  let value=document.getElementById(name).files[0];
+  setRegSelec((prevState)=>(
+    {
+      ...prevState,
+      [name]:URL.createObjectURL(value)
+    }))
 }
 
 const [regSelec,setRegSelec]=useState({
@@ -92,7 +97,7 @@ const openModalAdd = () => {
           (data.length==1)?null:data.slice(1,data.length).map(elemento=>(
             <tr>
               <td>{elemento.clave}</td>
-              <td>{imagenes}</td>
+              <td><img src={elemento.fotografia}></img></td>
                <td>{elemento.nombre}</td>
               <td>{elemento.edad}</td>
               <td>{elemento.sexo}</td>
@@ -126,10 +131,10 @@ const openModalAdd = () => {
             <label>Fotografia</label>
             <input
               className="form-control"
-              id="foto"
+              id="fotografia"
               type="file"
               name="fotografia"
-              onChange={imagenes}
+              onChange={handleChangeImg}
             />
             <br />
 
@@ -222,10 +227,9 @@ const openModalAdd = () => {
             <input
               className="form-control"
               type="file"
-              id="foto"
+              id="fotografia"
               name="fotografia"
-              value={regSelec ? regSelec.fotografia: ''}
-              onChange={imagenes}
+              onChange={handleChangeImg}
             />
             <br />
 
