@@ -4,3 +4,9 @@ img {
     padding: 5px;
     width: 250px;
   }
+  
+  .titulo{
+    font-family: 'Britannic Bold';
+    font-size: 60px;
+    text-decoration: underline;
+  }

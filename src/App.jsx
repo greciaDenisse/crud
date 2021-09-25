@@ -1,10 +1,9 @@
 import React,{useState} from 'react';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {Modal, ModalBody, ModalHeader, ModalFooter} from 'reactstrap';
 function App() {
-
-  const dataLugares= [{clave:0,fotografia: '',nombre:'',edad:'',sexo:'',salario:''},];
+document.title = 'Gestión de empleados';
+const dataLugares= [{clave:0,fotografia: '',nombre:'',edad:'',sexo:'',salario:''}];
 const [data,setData]=useState(dataLugares);
 const [modalEditar,setModalEditar]=useState(false);
 const [modalEliminar,setModalEliminar]=useState(false);
@@ -74,14 +73,20 @@ const openModalAdd = () => {
   setModalInsertar(false);
  }
   return (
-    
+    <div className="container">
+    <h3 className="text-center m-2 titulo">👉🏼E m p l e a d o s👈🏼</h3>
     <div className="App">
-      <br />
-  <button className="btn btn-success" onClick={()=>openModalAdd()}>Insertar</button>  
+      <br/>
+      <div className="row">
+  <button className="btn btn-primary btn-block m-2" onClick={()=>openModalAdd()}>Nuevo Empleado ➕👨🏻‍💻</button>
+  </div>
  <br />
  <br />
-      <table className="table table-bordered">
-        <thead>
+ {data.length === 1 ? (
+   <li className="list-group-item text-center">🤡Aún no hay empleados registrados🤡</li>
+ ) : (
+      <table className="table table-striped table align-middle table-bordered text-center">
+        <thead className="table-dark">
           <tr>
           <th>CLAVE</th>
           <th>FOTOGRAFIA</th>
@@ -95,21 +100,22 @@ const openModalAdd = () => {
         <tbody>
           {   
           (data.length==1)?null:data.slice(1,data.length).map(elemento=>(
-            <tr>
+            <tr key={elemento.clave} >
               <td>{elemento.clave}</td>
               <td><img src={elemento.fotografia}></img></td>
                <td>{elemento.nombre}</td>
               <td>{elemento.edad}</td>
               <td>{elemento.sexo}</td>
               <td>{elemento.salario}</td>
-              <td><button className="btn btn-primary" onClick={()=>selecReg(elemento, 'Editar')}>Editar</button>
-              <button className="btn btn-danger" onClick={()=>selecReg(elemento, 'Eliminar')}>Eliminar</button></td>
+              <td><button className="btn btn-warning m-2" onClick={()=>selecReg(elemento, 'Editar')}>Editar📝</button>
+              
+              <button className="btn btn-danger" onClick={()=>selecReg(elemento, 'Eliminar')}>Eliminar🗑️</button></td>
             </tr>
           ))
           }
         </tbody>
       </table>
-
+      )}
       <Modal isOpen={modalEditar}>
         <ModalHeader>
           <div>
@@ -150,7 +156,7 @@ const openModalAdd = () => {
             <label>Edad</label>
             <input
               className="form-control"
-              type="text"
+              type="number"
               name="edad"
               value={regSelec && regSelec.edad}
               onChange={handleChange}
@@ -168,7 +174,7 @@ const openModalAdd = () => {
             <label>Salario</label>
             <input
               className="form-control"
-              type="text"
+              type="number"
               name="salario"
               value={regSelec && regSelec.salario}
               onChange={handleChange}
@@ -245,7 +251,7 @@ const openModalAdd = () => {
             <label>Edad</label>
             <input
               className="form-control"
-              type="text"
+              type="number"
               name="edad"
               value={regSelec ? regSelec.edad: ''}
               onChange={handleChange}
@@ -263,7 +269,7 @@ const openModalAdd = () => {
             <label>Salario</label>
             <input
               className="form-control"
-              type="text"
+              type="number"
               name="salario"
               value={regSelec ? regSelec.salario: ''}
               onChange={handleChange}
@@ -284,7 +290,7 @@ const openModalAdd = () => {
           </button>
         </ModalFooter>
       </Modal>
-
+      </div>
     </div>
   );
 }
